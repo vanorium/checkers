@@ -1,0 +1,216 @@
+*{
+    margin: 0;
+    left: 0;
+    top: 0;
+    padding: 0;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 400;
+    user-select: none;
+    line-height: 1;
+
+}
+
+body,html{
+    height: 100%;
+}
+
+.wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table{
+    position: relative;
+    border-radius: 1vmin;
+    overflow: hidden;
+    /* width: 700px;  
+    height: 700px; */
+    display: grid;
+    min-width: 700px;
+    min-height: 700px;
+}
+
+cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.textAbcWrapper{
+    position: absolute;
+    display: flex;
+    width: 100%; 
+    justify-content: right;
+}
+
+.white {
+    background:  rgba(240, 217, 181);
+}
+
+.black {
+    background: rgb(181, 136, 99);
+}
+
+.active {
+    background: rgb(60, 117, 60);
+    cursor: pointer;
+}
+
+.remove {
+    background: rgb(170, 69, 69);
+}
+
+.move {
+    background: rgb(60, 117, 60);
+    cursor: pointer;
+    
+}
+
+checker {
+    height: 85%;
+    width: 85%;
+    border-radius: 100vmin;
+    /* z-index: 1; */
+}
+
+.checker{
+    height: 100px;
+    width: 100px;
+    border-radius: 100vmin;
+}
+
+.ch-white{
+    background: white;
+}
+
+.ch-black{
+    background: rgb(0, 0, 0);
+}
+
+.king{
+    background-repeat: no-repeat;
+    background-image: url(/crown.svg);
+    background-position: 50% 45%;
+    background-size: 50%;
+}
+
+t{
+    position: absolute;
+    padding: 0 0.5vmin;
+    opacity: 75%;
+    user-select: none;
+    font-size: 125%;
+}
+
+.abc{
+    position: relative;
+}
+
+
+.count{
+    left: auto;
+    top: auto;
+    color:rgb(181, 136, 99);
+    font-size: 150%;
+
+}
+
+@keyframes opacity-up {
+    0%{
+        opacity: 0%;
+    }
+
+    100%{
+        opacity: 100%;
+    }
+}
+
+@keyframes opacity-down {
+    0%{
+        opacity: 100%;
+    }
+
+    100%{
+        opacity: 0%;
+    }
+}
+
+.opacity-up{
+    animation-name: opacity-up;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+}
+
+.opacity-down{
+    animation-name: opacity-down;
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    animation-fill-mode: forwards
+}
+
+.menu-forwhite{
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.menu-forblack{
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.menu{
+    border-radius: 1vmin;
+    overflow: hidden;
+    display: flex;
+    min-width: 700px;
+    min-height: 700px;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-forwhite{
+    background: white;
+    color: black;
+    box-shadow: 0px 0px 0px 1.5px rgb(255, 255, 255) inset;
+
+}
+
+.btn-forblack{
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 0px 1.5px rgb(0, 0, 0) inset;
+
+}
+
+btn{
+    margin-top: 32px;
+    width: 100px;
+    height: 40px;
+    user-select: none;
+    border-radius: 150px;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 125%;
+
+    transition: 0.1s ease-out;
+}
+
+.btn-forwhite:hover{
+    background: rgba(255, 255, 255, 0);
+    color: white;
+}
+
+.btn-forblack:hover{
+    background: rgba(255, 255, 255, 0);
+    color: rgb(0, 0, 0);
+
+}
