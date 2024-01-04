@@ -3,10 +3,8 @@ const table = document.querySelector(".table");
 
 //board settings
 let size = 8;
-let blackCheckersEdgeFromTop = 3;
-let whiteCheckersEdgeFromBottom = 3;
-table.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-// table.style.gridTemplateRows = `repeat(${size}, 1fr)`
+let aiDifficulty = 0
+let packOfRules="english"
 let side = "white";
 let choosedChecker = 0;
 let def = [];
@@ -44,38 +42,98 @@ document.addEventListener("keydown", (event) => {
 });
 
 // setting up the menu after determining the end of the game
-let menuWrapper = document.getElementById("menuWrapper");
+let menu = document.getElementById("menu");
+let main = document.getElementById("main");
 
-menuWrapper.style = "display: none;";
+let slider_tableSize=document.getElementById("slider_tableSize")
+let text_tableSize=document.getElementById("text_tableSize")
+
+slider_tableSize.addEventListener("input",()=>{
+    size=slider_tableSize.value
+    let oldString = text_tableSize.innerHTML
+    let newString = oldString.replace(/\([^)]*\)/g, `(${size})`);
+    text_tableSize.innerHTML=newString
+})
+
+let slider_variant=document.getElementById("slider_variant")
+let text_variant=document.getElementById("text_variant")
+let text_variant_spanEn=document.getElementById("en")
+let text_variant_spanRu=document.getElementById("ru")
+
+slider_variant.addEventListener("input",()=>{
+    packOfRules=slider_variant.value==0?"english":"russian"
+    text_variant_spanEn.classList.remove("selected")
+    text_variant_spanRu.classList.remove("selected")
+
+    if(packOfRules=="english"){
+        text_variant_spanEn.classList.add("selected")
+    }
+    else{
+        text_variant_spanRu.classList.add("selected")
+    }
+})
+
+
+let slider_ai=document.getElementById("slider_ai")
+let text_ai=document.getElementById("text_ai")
+
+slider_ai.addEventListener("input",()=>{
+    aiDifficulty=slider_ai.value
+    let oldString = text_ai.innerHTML
+    let newString = oldString.replace(/\([^)]*\)/g, `(${aiDifficulty})`);
+    text_ai.innerHTML=newString
+})
+
+// menu.style = "display: none;";
 
 let winner = "";
+let btnAgain = document.getElementById("again")
+btnAgain.addEventListener("click",()=>{
+    create()
+    menu.classList.remove("opacity-up")
+    menu.classList.add("opacity-down")
+
+    setTimeout(() => {
+        menu.style = "display: none;";
+    }, 250);
+})
+
+// bottom
+let group=document.getElementById("group")
+let groupContainers=group.querySelectorAll(".container")
 
 function end() {    
+    console.log("_______________________");
+    winner = side == "white" ? "black" : "white";
+    console.log("winner:" + winner);
     setTimeout(() => {
-        winner = side == "white" ? "black" : "white";
-        console.log("winner:" + winner);
 
-        let menuButton = document.querySelector(".menu").querySelector("btn")
-        
-        menuWrapper.style = "display: flex;";
+        menuChecker.style=""
+        btnAgain.innerText="again"
+        menu.style = "";
+        menu.classList.remove("opacity-down")
+        menu.classList.add("opacity-up");
 
-        menuWrapper.classList.remove("opacity-down")
-        menuWrapper.classList.add("opacity-up");
+        // center 
+        main.classList.remove("backgroundFor-white","backgroundFor-black")
+        main.classList.add("backgroundFor-" + winner);
+        btnAgain.classList.remove("btnFor-white","btnFor-black")
+        btnAgain.classList.add("btnFor-" + winner);
+        document.querySelector(".checker").classList.remove("ch-white","ch-black");
+        document.querySelector(".checker").classList.add(winner == "white" ? "ch-white" : "ch-black");
 
-        menuButton.addEventListener("click",()=>{
-            create()
-            menuWrapper.classList.remove("opacity-up")
-            menuWrapper.classList.add("opacity-down")
+        groupContainers.forEach(container=>{
+            let element=container.querySelector("element")
+            let slider=container.querySelector("input")
 
-            setTimeout(() => {
-                menuWrapper.style = "display: none;";
-            }, 250);
+            element.classList.remove("textFor-white","textFor-black")
+            element.classList.add("textFor-"+winner)
+
+            slider.classList.remove("rangeFor-white","rangeFor-black")
+            slider.classList.add("rangeFor-"+winner)
+            slider.style.setProperty('--thumb-background', winner === 'white' ? 'black' : 'white');
         })
 
-
-        menuWrapper.querySelector(".menu").classList.add("menu-for" + winner);
-        menuButton.classList.add("btn-for" + winner);
-        menuWrapper.querySelector(".checker").classList.add(winner == "white" ? "ch-white" : "ch-black");
     }, 200);
 }
 
@@ -148,7 +206,7 @@ function step(fromCellX, fromCellY, checkX, checkY, basedCellX, basedCellY, defi
                 if (defined) {
                     mustCells(checkingCell, fromCellX, fromCellY, basedCellX, basedCellY);
 
-                    if (isKing) {
+                    if (packOfRules=="russian" && isKing) {
                         for (let i = 2; i <= size; i++) {
                             CELLS.forEach((checkingCell) => {
                                 let checkingCellX = +checkingCell.getAttribute("x");
@@ -195,16 +253,17 @@ function check(fromCell, checkX, checkY, defined) {
                 check(fromCell, continueDir(checkX), continueDir(checkY), defined);
             }
 
-            // target was finded; it means that there is an obstacle, after this it will check a next cell for none cell in it, if it's true => killer was finded
+            // target was finded; it means that there is an obstacle, after this it will check a next cell for none cell in it, if it's true => killer was found
             if (checkerCheck(checkingCell)) {
-                step(checkingCellX, checkingCellY, checkX, checkY, fromCellX, fromCellY, defined, kingStatus);
+                if((packOfRules=="english" && checkY == (side == "white" ? -1 : 1)) || kingStatus || packOfRules=="russian"){
+                    step(checkingCellX, checkingCellY, checkX, checkY, fromCellX, fromCellY, defined, kingStatus);
+                }
             }
 
             // there's no taget
             if (!checkingCell.querySelector("checker") && !must.length) {
                 if (kingStatus == 0 ? checkY == (side == "white" ? -1 : 1) : 1) {
-                    if (kingStatus) {
-                        console.log("7");
+                    if (packOfRules=="russian" && kingStatus) {
                         check(fromCell, continueDir(checkX), continueDir(checkY), defined);
                     }
 
@@ -354,6 +413,16 @@ function create(){
     }
 
     //realization of table
+    table.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    let blackCheckersEdgeFromTop =  size==6?2:
+                                    size==7?3:
+                                    size==8?3:
+                                    size==9?3:
+                                    size==10?4:
+                                    size==11?4:
+                                    size==12?5:0
+
+    let whiteCheckersEdgeFromBottom = blackCheckersEdgeFromTop;
     for (let y = 1; y <= size; y++) {
         for (let x = 1; x <= size; x++) {
             let cell = document.createElement("cell");
@@ -361,13 +430,10 @@ function create(){
             cell.setAttribute("y", y);
     
             let textY = document.createElement("t");
-            let textAbc = document.createElement("t");
-            let textAbcWrapper = document.createElement("div");
-            textAbcWrapper.classList.add("textAbcWrapper");
-            textAbcWrapper.appendChild(textAbc);
-            textAbc.classList.add("abc");
-    
+            let textAbc = document.createElement("t"); textAbc.classList.add("abc");
+            let textAbcWrapper = document.createElement("div"); textAbcWrapper.classList.add("textAbcWrapper"); textAbcWrapper.appendChild(textAbc);    
             if (y == 1) {
+
                 arr = abc.split("");
     
                 if ((x + 2) % arr.length == 0) {
@@ -550,7 +616,25 @@ function create(){
 
 }
 
+// creating the menu at start
+main.classList.add("backgroundFor-white");
+btnAgain.classList.add("btnFor-white");
+let menuChecker = document.getElementById("checker")
+menuChecker.style="display:none;"
+btnAgain.innerText="play"
+groupContainers.forEach(container=>{
+    let element=container.querySelector("element")
+    let slider=container.querySelector("input")
+
+    element.classList.add("textFor-white")
+    slider.classList.add("rangeFor-white")
+    slider.style.setProperty('--thumb-background', "black");
+})
+
 create()
+document.querySelectorAll("checker").forEach(element=>{
+    element.remove()
+})
+clear()
 
-
-
+document.querySelector("body").style=""

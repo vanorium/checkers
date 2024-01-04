@@ -1,0 +1,280 @@
+$fontSizer: calc(0.5vw + 1vh);
+
+*{
+    margin: 0;
+    left: 0;
+    top: 0;
+    padding: 0;
+    font-family: 'Alegreya Sans SC', sans-serif;
+    font-weight: 400;
+    user-select: none;
+    line-height: 1;
+
+}
+
+body,html{
+    height: 100%;
+}
+
+.wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table{
+    display: grid;
+}
+
+.asTable{
+    position: relative;
+    min-width: 38vw;
+    min-height: 38vw;
+    border-radius: 1vmin;
+    overflow: hidden;
+
+}
+
+@media (max-width:800px) {
+    .asTable{
+       min-width: 52vh;
+       min-height: 52vh; 
+    }
+}
+
+cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.textAbcWrapper{
+    position: absolute;
+    display: flex;
+    width: 100%; 
+    justify-content: right;
+}
+
+// cell options
+.white {
+    background:  rgba(240, 217, 181);
+}
+
+.black {
+    background: rgb(181, 136, 99);
+}
+
+.active {
+    background: rgb(60, 117, 60);
+    cursor: pointer;
+}
+
+.remove {
+    background: rgb(170, 69, 69);
+}
+
+.move {
+    background: rgb(60, 117, 60);
+    cursor: pointer;
+    
+}
+
+// cell text
+t{
+    font-size: 1vw;
+    padding: 2.5% 5%;
+    position: absolute;
+    opacity: 75%;
+    user-select: none;
+}
+
+.abc{
+    position: relative;
+}
+
+.count{
+    left: auto;
+    top: auto;
+    color:rgb(181, 136, 99);
+    font-size: 150%;
+}
+
+// checker options
+checker {
+    height: 85%;
+    width: 85%;
+    border-radius: 100vmin;
+    /* z-index: 1; */
+}
+
+.ch-white{
+    background: white;
+}
+
+.ch-black{
+    background: rgb(0, 0, 0);
+}
+
+.king{
+    background-repeat: no-repeat;
+    background-image: url(/crown.svg);
+    background-position: 50% 45%;
+    background-size: 50%;
+}
+
+// animations (menu)
+@keyframes opacity-up {
+    0%{
+        opacity: 0%;
+    }
+
+    100%{
+        opacity: 100%;
+    }
+}
+
+@keyframes opacity-down {
+    0%{
+        opacity: 100%;
+    }
+
+    100%{
+        opacity: 0%;
+    }
+}
+
+.opacity-up{
+    animation-name: opacity-up;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    animation-fill-mode: forwards;
+}
+
+.opacity-down{
+    animation-name: opacity-down;
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    animation-fill-mode: forwards
+}
+
+// menu
+//there are 2 variants for each; the variant is relative to the winner's color
+.backgroundFor-white{
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.backgroundFor-black{
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.btnFor-white{
+    background: white;
+    color: black;
+    box-shadow: 0px 0px 0px calc($fontSizer / 10) rgb(255, 255, 255) inset;
+}
+
+.btnFor-black{
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 0px calc($fontSizer / 10) rgb(0, 0, 0) inset;
+}
+
+.btnFor-white:hover{
+    background: rgba(255, 255, 255, 0);
+    color: white;
+}
+
+.btnFor-black:hover{
+    background: rgba(255, 255, 255, 0);
+    color: rgb(0, 0, 0);
+
+}
+
+.textFor-white{
+    color: white;
+}
+
+.textFor-black{
+    color: black;
+}
+
+input::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: $fontSizer;
+    height: $fontSizer;
+    border-radius: 123vw;
+    cursor: pointer;
+    background: var(--thumb-background);
+     
+}
+
+.rangeFor-black{
+    background: #000000;
+}
+
+.rangeFor-white { 
+    background: #ffffff;
+  }
+//
+
+// menu checker (it isn't a game checker)
+
+.rounded{
+    border-radius: 123vw;    
+}
+
+.checker{
+    height: 13%;
+    width: 13%;
+    margin-bottom: 5%;
+}
+
+btn{
+    z-index: 2024;
+    width: 22%;
+    height: 6%;
+    font-size: $fontSizer;
+    user-select: none;
+    cursor: pointer;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: background 0.1s ease-out, color 0.1s ease-out;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+input{
+    z-index: 2024;
+    opacity: 0.667;
+    appearance: none;
+    padding: 0 2%;
+    width: 64%;
+    height: 3.5%;
+    border-radius: 123vw;
+    outline: none;  
+}    
+
+element{
+    font-size: $fontSizer;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.selected{
+    font-weight: 500;
+    font-size: larger;
+}

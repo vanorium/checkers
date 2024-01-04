@@ -9,17 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400;1,500;1,700;1,800&display=swap" rel="stylesheet">
 </head>
-<body>
+<body style="display: none;">
     <div class="wrapper">
-        <div class="table">
+        <div class="table asTable">
         </div>
     </div>
-    <div id="menuWrapper" class="wrapper">
-        <div class="menu">
-            <div class="checker king"></div>
-            <btn>Again</btn>
+    <div id="menu" class="wrapper" style="z-index: 12;">
+        <div id="main" class="asTable">
+            <div class="wrapper" style="flex-direction: column;">
+                <div id="checker" class="checker rounded king"></div>
+                <btn id="again" class="rounded">again</btn>
+            </div>
+            <div class="wrapper" style="align-items: flex-end;">
+                <div id='group' style="display:flex; justify-content: center; margin-bottom:3.5%; width: 100%; height: 100%;">
+                    <div class="container">
+                        <element id="text_tableSize" class="textFor-white">table size (8)</element>
+                        <input id="slider_tableSize" type="range" class="rangeFor-white" step="1" value="8" min="6" max="12">
+                    </div>
+                    <div class="container">
+                        <element id="text_variant" class="textFor-white"><span id="en" class="selected">english</span> / <span id="ru">russian</span><br> variant</element>
+                        <input id="slider_variant" type="range" class="rangeFor-white" step="1" value="0" min="0" max="1">
+                    </div> 
+                    <div class="container">
+                        <element id="text_ai" class="textFor-white">ai difficulty (0)<span style="font-style: italic; opacity: 50%;"><br>0 means no ai</span>
+                        </element>
+                        <input id="slider_ai" type="range" class="rangeFor-white" step="1" value="0" min="0" max="3">
+                    </div> 
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="scripts.js"></script>
 </body>
 </html>
