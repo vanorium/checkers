@@ -47,12 +47,14 @@ let main = document.getElementById("main");
 
 let slider_tableSize=document.getElementById("slider_tableSize")
 let text_tableSize=document.getElementById("text_tableSize")
+previewTable()
 
 slider_tableSize.addEventListener("input",()=>{
     size=slider_tableSize.value
     let oldString = text_tableSize.innerHTML
     let newString = oldString.replace(/\([^)]*\)/g, `(${size})`);
     text_tableSize.innerHTML=newString
+    previewTable()
 })
 
 let slider_variant=document.getElementById("slider_variant")
@@ -252,7 +254,7 @@ function check(fromCell, checkX, checkY, defined) {
 
         if (fromCellX + checkX == checkingCellX && fromCellY + checkY == checkingCellY) {
             // the always true loop-check for a king because of must.length!=0 => it will find an exit at the end of ends
-            if (must.length && kingStatus) {
+            if (must.length && kingStatus && packOfRules=="russian") {
                 check(fromCell, continueDir(checkX), continueDir(checkY), defined);
             }
 
@@ -639,11 +641,14 @@ groupContainers.forEach(container=>{
     slider.style.setProperty('--thumb-background', "black");
 })
 
-create()
-document.querySelector(".count").style="display:none;"
-document.querySelectorAll("checker").forEach(element=>{
-    element.remove()
-})
-clear()
 
 document.querySelector("body").style=""
+
+function previewTable(){
+    create()
+    document.querySelector(".count").style="display:none;"
+    // document.querySelectorAll("checker").forEach(element=>{
+    //     element.remove()
+    // })
+    clear()
+}
