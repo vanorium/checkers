@@ -96,7 +96,7 @@ t {
   left: auto;
   top: auto;
   color: rgb(181, 136, 99);
-  font-size: 150%;
+  font-size: 1vw;
 }
 
 checker {
@@ -212,16 +212,15 @@ input::-webkit-slider-thumb {
 }
 
 .checker {
-  height: 13%;
-  width: 13%;
-  margin-bottom: 5%;
+  height: 24%;
+  width: 24%;
 }
 
 btn {
   z-index: 2024;
-  width: 22%;
-  height: 6%;
-  font-size: calc(0.5vw + 1vh);
+  width: 30%;
+  height: 8%;
+  font-size: calc((0.5vw + 1vh) * 1.75);
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
@@ -262,4 +261,9 @@ element {
 .selected {
   font-weight: 500;
   font-size: larger;
+}
+
+#textWinner {
+  transform: scale(1.5);
+  margin: 2% 0 10% 0;
 }/*# sourceMappingURL=styles.css.map */

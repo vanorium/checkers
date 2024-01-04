@@ -108,7 +108,9 @@ function end() {
     console.log("winner:" + winner);
     setTimeout(() => {
 
+        document.querySelector(".count").style="display:none;"
         menuChecker.style=""
+        textWinner.style=""
         btnAgain.innerText="again"
         menu.style = "";
         menu.classList.remove("opacity-down")
@@ -121,6 +123,7 @@ function end() {
         btnAgain.classList.add("btnFor-" + winner);
         document.querySelector(".checker").classList.remove("ch-white","ch-black");
         document.querySelector(".checker").classList.add(winner == "white" ? "ch-white" : "ch-black");
+        textWinner.style=winner=="white"?"color:white;":"color:black;"
 
         groupContainers.forEach(container=>{
             let element=container.querySelector("element")
@@ -491,6 +494,9 @@ function create(){
         }
     }
     
+    document.querySelector(".count").style=""
+
+
     //initialise
     checkers = document.querySelectorAll("checker");
     CELLS = document.querySelectorAll(".black", ".cell");
@@ -620,18 +626,21 @@ function create(){
 main.classList.add("backgroundFor-white");
 btnAgain.classList.add("btnFor-white");
 let menuChecker = document.getElementById("checker")
+let textWinner = document.getElementById("textWinner")
 menuChecker.style="display:none;"
+textWinner.style="display:none;"
 btnAgain.innerText="play"
 groupContainers.forEach(container=>{
     let element=container.querySelector("element")
     let slider=container.querySelector("input")
-
+    
     element.classList.add("textFor-white")
     slider.classList.add("rangeFor-white")
     slider.style.setProperty('--thumb-background', "black");
 })
 
 create()
+document.querySelector(".count").style="display:none;"
 document.querySelectorAll("checker").forEach(element=>{
     element.remove()
 })
